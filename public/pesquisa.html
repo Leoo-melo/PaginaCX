@@ -1,0 +1,356 @@
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>PESQUISA DE SATISFAÇÃO CX</title>
+        <style>
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            body {
+                font-family: Arial, sans-serif;
+                background: url('/IMG/Untitled\ design\ \(6\).png') no-repeat center center fixed;
+                background-size: cover;
+                height: 100vh;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+            }
+            header {
+                background-color: #003366;
+                padding: 20px;
+                text-align: center;
+                width: 100%;
+                position: fixed;
+                top: 0;
+                left: 0;
+                color: white;
+            }
+            header h1 {
+                font-size: 27px;
+                margin-bottom: 10px;
+            }
+            .form-section {
+                margin-top: 400px;
+                background-color: #ffffff;
+                padding: 40px;
+                border-radius: 10px;
+                box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                width: 600px;
+                text-align: center;
+            }
+            h2 {
+                color: #003366;
+                margin-bottom: 20px;
+            }
+            .question {
+                margin-bottom: 25px;
+                padding: 15px;
+                border-bottom: 1px solid #ccc;
+            }
+            .question h3 {
+                color: #003366;
+                font-size: 18px;
+                margin-bottom: 10px;
+            }
+            .rating-options {
+                display: flex;
+                justify-content: space-between;
+                margin-bottom: 10px;
+                margin-top: 25px; /* Adicionado para aumentar o espaço acima das opções */
+            }
+            .rating-options label {
+                font-size: 14px;
+                color: #003366;
+            }
+            .rating-options input {
+                margin-right: 5px;
+            }
+            .submit-btn {
+                background-color: #005bb5;
+                color: white;
+                padding: 10px 15px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-top: 20px;
+            }
+            .submit-btn:hover {
+                background-color: #007bff;
+            }
+            .response-message {
+                display: none;
+                text-align: center;
+                margin-top: 20px;
+                font-size: 18px;
+                color: #28a745;
+            }
+            .error-message {
+                color: red;
+                margin-top: 20px;
+                display: none;
+            }
+            .buttons-container {
+                display: none;
+                flex-direction: column;
+                align-items: center;
+                margin-top: 20px;
+            }
+            .buttons-container a {
+                background-color: #005bb5;
+                color: white;
+                padding: 10px 20px;
+                margin: 10px 0;
+                text-decoration: none;
+                border-radius: 5px;
+                display: block;
+                width: 200px;
+                text-align: center;
+            }
+            .buttons-container a:hover {
+                background-color: #007bff;
+            }
+        
+            /* Estilo para a logo no topo */
+            .logo {
+                position: fixed;
+                top: 20px;
+                left: 160px;
+                height: 40px;
+                width: 40px;
+            }
+            img {
+                height: 40px;
+            }
+
+            /* Responsividade */
+            @media (max-width: 768px) {
+                body {
+                padding: 20px;
+                background-size: cover;
+             }
+
+                header h1 {
+                font-size: 28px;
+             }
+
+                .form-section {
+                width: 90%; /* Ajuste de largura para caber na tela */
+                padding: 20px;
+                margin-top: 80px;
+                }
+
+             .input-group input[type="text"],
+                .input-group input[type="email"] {
+                font-size: 14px;
+             }
+
+             .submit-btn {
+                padding: 8px 12px;
+                font-size: 14px;
+                }
+
+                .logo {
+                height: 30px;
+                width: 30px;
+                top: 15px;
+                left: 20px;
+                }
+
+                img {
+                height: 30px;
+                }
+            }
+            
+            @media (max-width: 480px) {
+                header h1 {
+                    font-size: 22px;
+                }
+
+                .form-section {
+                    padding: 15px;
+                }
+
+                h2 {
+                    font-size: 18px;
+                }
+
+                .input-group label, 
+                .anonymous-option label {
+                    font-size: 14px;
+                }
+
+                .submit-btn {
+                    font-size: 12px;
+                    padding: 6px 10px;
+                }
+
+                /* Ocultar logo em telas menores que 480px */
+                .logo {
+                    display: none;
+                }
+            }
+
+        </style>
+    </head>
+    <body>
+        <header>
+            <div class="container">
+                <h1>PESQUISA DE SATISFAÇÃO CX</h1>
+            </div>
+        </header>
+        <!-- Logo no topo -->
+        <div class="logo">
+        <img src="/IMG/LogoGEPbranca.png" alt="Logo Costdrivers" >
+        </div>
+        <section class="form-section" id="form-section">
+            <h2>Por favor, avalie sua experiência</h2>
+            <form id="satisfaction-form" action="/responder" method="POST">
+                <input type="hidden" name="usuario_id" value="{{usuario_id}}">
+                <div class="question">
+                    <h3>De 0 a 10, como você avalia a sua experiência geral na reunião de CX?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia1" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia1" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia1" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia1" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia1" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia1" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia1" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia1" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia1" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia1" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia1" value="10"> 10</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <h3>De 0 a 10, o quanto o conteúdo abordado na reunião foi relevante para suas necessidades?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia2" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia2" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia2" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia2" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia2" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia2" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia2" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia2" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia2" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia2" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia2" value="10"> 10</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <h3>De 0 a 10, o quanto você se sentiu à vontade durante a reunião?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia3" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia3" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia3" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia3" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia3" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia3" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia3" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia3" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia3" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia3" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia3" value="10"> 10</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <h3>De 0 a 10 o quanto a organização e a estrutura da reunião foram eficientes?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia4" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia4" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia4" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia4" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia4" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia4" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia4" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia4" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia4" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia4" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia4" value="10"> 10</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <h3>De 0 a 10, como você avalia a condução da reunião?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia5" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia5" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia5" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia5" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia5" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia5" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia5" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia5" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia5" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia5" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia5" value="10"> 10</label>
+                    </div>
+                </div>
+                <div class="question">
+                    <h3>De 0 a 10, qual a probabilidade de você recomendar essa reunião para outros profissionais?</h3>
+                    <div class="rating-options">
+                        <label><input type="radio" name="experiencia6" value="0"> 0</label>
+                        <label><input type="radio" name="experiencia6" value="1"> 1</label>
+                        <label><input type="radio" name="experiencia6" value="2"> 2</label>
+                        <label><input type="radio" name="experiencia6" value="3"> 3</label>
+                        <label><input type="radio" name="experiencia6" value="4"> 4</label>
+                        <label><input type="radio" name="experiencia6" value="5"> 5</label>
+                        <label><input type="radio" name="experiencia6" value="6"> 6</label>
+                        <label><input type="radio" name="experiencia6" value="7"> 7</label>
+                        <label><input type="radio" name="experiencia6" value="8"> 8</label>
+                        <label><input type="radio" name="experiencia6" value="9"> 9</label>
+                        <label><input type="radio" name="experiencia6" value="10"> 10</label>
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn">Enviar Respostas</button>
+                <div class="error-message" id="error-message">Por favor, responda todas as perguntas antes de enviar.</div>
+            </form>
+            <div class="response-message" id="response-message">
+                Obrigado por enviar suas respostas!
+            </div>
+        </section>
+
+        <script>
+            // Captura o "usuario_id" da URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const usuario_id = urlParams.get('usuario_id');
+        
+            // Insere o "usuario_id" no formulário
+            const hiddenInput = document.createElement('input');
+            hiddenInput.type = 'hidden';
+            hiddenInput.name = 'usuario_id';
+            hiddenInput.value = usuario_id;
+            document.getElementById('satisfaction-form').appendChild(hiddenInput);
+        
+            // Submissão do formulário com verificação de respostas
+            document.getElementById('satisfaction-form').addEventListener('submit', function(event) {
+                event.preventDefault(); // Evita o envio padrão do formulário
+        
+                // Verificar se todas as perguntas foram respondidas
+                var allAnswered = true;
+                var questions = document.querySelectorAll('.question');
+        
+                questions.forEach(function(question) {
+                    var inputs = question.querySelectorAll('input[type="radio"]');
+                    var isAnswered = Array.from(inputs).some(input => input.checked);
+                    if (!isAnswered) {
+                        allAnswered = false;
+                    }
+                });
+        
+                if (!allAnswered) {
+                    document.getElementById('error-message').style.display = 'block';
+                } else {
+                    // Se todas as perguntas foram respondidas, submete o formulário
+                    document.getElementById('error-message').style.display = 'none';
+                    document.getElementById('satisfaction-form').submit();
+                }
+            });
+        </script>
+    </body>
+    </html>
