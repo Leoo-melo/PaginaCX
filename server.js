@@ -4,7 +4,9 @@ const bodyParser = require('body-parser');
 const path = require('path');
 
 const app = express();
-const db = new sqlite3.Database('./database.db');
+const Database = require('better-sqlite3');
+const db = new Database('database.db', { verbose: console.log });
+
 
 // Middleware
 app.use(bodyParser.urlencoded({ extended: true }));
