@@ -2,11 +2,10 @@
   "name": "paginacx",
   "version": "1.0.0",
   "main": "server.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node app.js",
-    "build": "npm rebuild sqlite3"
-  },
+"scripts": {
+  "start": "node app.js",
+  "build": "npm rebuild better-sqlite3"
+},
   "keywords": [],
   "author": "",
   "license": "ISC",
